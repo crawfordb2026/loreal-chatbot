@@ -239,11 +239,25 @@ function saveSelectedProducts() {
   localStorage.setItem('selectedProducts', JSON.stringify(selectedProductIds));
 }
 
-// Render product grid
+let productSearchTerm = '';
+let isRTL = false;
+let webSearchEnabled = false;
+
+// Product search filtering
 function renderProductGrid() {
   const grid = document.getElementById('productGrid');
   grid.innerHTML = '';
-  allProducts.forEach(product => {
+  let filtered = allProducts;
+  if (productSearchTerm.trim()) {
+    const term = productSearchTerm.trim().toLowerCase();
+    filtered = allProducts.filter(p =>
+      p.name.toLowerCase().includes(term) ||
+      p.brand.toLowerCase().includes(term) ||
+      p.category.toLowerCase().includes(term) ||
+      p.description.toLowerCase().includes(term)
+    );
+  }
+  filtered.forEach(product => {
     const card = document.createElement('div');
     card.className = 'product-card' + (selectedProductIds.includes(product.id) ? ' selected' : '');
     card.tabIndex = 0;
@@ -256,7 +270,6 @@ function renderProductGrid() {
       <button class="product-desc-toggle" type="button">Description</button>
       <div class="product-description">${product.description}</div>
     `;
-    // Selection logic
     card.addEventListener('click', (e) => {
       if (e.target.classList.contains('product-desc-toggle')) return;
       toggleProductSelection(product.id);
@@ -267,7 +280,6 @@ function renderProductGrid() {
         toggleProductSelection(product.id);
       }
     });
-    // Description toggle
     card.querySelector('.product-desc-toggle').addEventListener('click', (e) => {
       e.stopPropagation();
       card.classList.toggle('show-desc');
@@ -359,6 +371,44 @@ function setupClearButton() {
   document.getElementById('clearSelectedBtn').addEventListener('click', clearSelectedProducts);
 }
 
+// Product search input event
+function setupProductSearch() {
+  const input = document.getElementById('productSearchInput');
+  input.addEventListener('input', (e) => {
+    productSearchTerm = e.target.value;
+    renderProductGrid();
+  });
+}
+
+// RTL toggle
+function setupRTLToggler() {
+  const btn = document.getElementById('rtlToggleBtn');
+  btn.addEventListener('click', () => {
+    isRTL = !isRTL;
+    document.body.classList.toggle('rtl', isRTL);
+    btn.classList.toggle('active', isRTL);
+  });
+}
+
+// Web search integration (checkbox)
+function setupWebSearchCheckbox() {
+  // Add the checkbox below the existing include-products-row
+  const row = document.querySelector('.include-products-row');
+  const webSearchDiv = document.createElement('div');
+  webSearchDiv.style.display = 'flex';
+  webSearchDiv.style.alignItems = 'center';
+  webSearchDiv.style.gap = '8px';
+  webSearchDiv.style.marginTop = '4px';
+  webSearchDiv.innerHTML = `
+    <input type="checkbox" id="webSearchCheckbox" />
+    <label for="webSearchCheckbox">Include web search (with citations)</label>
+  `;
+  row.parentNode.insertBefore(webSearchDiv, row.nextSibling);
+  document.getElementById('webSearchCheckbox').addEventListener('change', (e) => {
+    webSearchEnabled = e.target.checked;
+  });
+}
+
 // Load products and initialize UI
 async function initializeProductUI() {
   loadSelectedProducts();
@@ -373,6 +423,9 @@ async function initializeProductUI() {
 
 document.addEventListener('DOMContentLoaded', () => {
   initializeProductUI();
+  setupProductSearch();
+  setupRTLToggler();
+  setupWebSearchCheckbox();
 });
 
 // Format AI response as HTML list if it looks like a list

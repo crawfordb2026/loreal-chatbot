@@ -507,3 +507,65 @@ body {
     font-size: 15px;
   }
 }
+
+.product-section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.product-search-input {
+  flex: 1;
+  padding: 7px 12px;
+  border: 1.5px solid var(--loreal-border);
+  border-radius: 16px;
+  font-size: 14px;
+  background: var(--loreal-light-gray);
+  color: var(--loreal-black);
+  margin-left: 8px;
+}
+.product-search-input:focus {
+  outline: none;
+  border-color: var(--loreal-gold);
+}
+.rtl-toggle-btn {
+  background: var(--loreal-gold);
+  color: var(--loreal-black);
+  border: none;
+  border-radius: 12px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+.rtl-toggle-btn.active {
+  background: var(--loreal-black);
+  color: var(--loreal-gold);
+}
+/* RTL support */
+.rtl .product-section,
+.rtl .product-section-header,
+.rtl .product-grid,
+.rtl .selected-products-section,
+.rtl .selected-products-list,
+.rtl .chatbox,
+.rtl .chat-window {
+  direction: rtl;
+}
+.rtl .product-grid {
+  justify-items: end;
+}
+.rtl .selected-products-list {
+  flex-direction: row-reverse;
+}
+.rtl .chatbox {
+  text-align: right;
+}
+.rtl .message.user {
+  align-items: flex-start;
+}
+.rtl .message.ai {
+  align-items: flex-end;
+}

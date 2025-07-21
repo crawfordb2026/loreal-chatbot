@@ -28,7 +28,11 @@
 
       <!------- Product Grid & Selection UI ------->
       <section class="product-section">
-        <h2 class="product-section-title">Browse Products</h2>
+        <div class="product-section-header">
+          <h2 class="product-section-title">Browse Products</h2>
+          <input id="productSearchInput" class="product-search-input" type="text" placeholder="Search products..." autocomplete="off" />
+          <button id="rtlToggleBtn" class="rtl-toggle-btn" type="button" title="Toggle RTL">RTL</button>
+        </div>
         <div id="productGrid" class="product-grid"></div>
         <div id="selectedProductsSection" class="selected-products-section">
           <h3>Selected Products</h3>
