@@ -26,6 +26,18 @@
         <p class="site-subtitle">Your personal beauty advisor powered by AI</p>
       </header>
 
+      <!------- Product Grid & Selection UI ------->
+      <section class="product-section">
+        <h2 class="product-section-title">Browse Products</h2>
+        <div id="productGrid" class="product-grid"></div>
+        <div id="selectedProductsSection" class="selected-products-section">
+          <h3>Selected Products</h3>
+          <div id="selectedProductsList" class="selected-products-list"></div>
+          <button id="clearSelectedBtn" class="clear-selected-btn" type="button">Clear All</button>
+        </div>
+        <button id="generateRoutineBtn" class="generate-routine-btn" type="button">Generate Routine</button>
+      </section>
+      
       <!------- Chat Area ------->
       <main>
         <section class="chatbox">
@@ -48,6 +60,10 @@
               <span class="visually-hidden">Send</span>
             </button>
           </form>
+          <div class="include-products-row">
+            <input type="checkbox" id="includeProductsCheckbox" checked />
+            <label for="includeProductsCheckbox">Include selected products in prompt</label>
+          </div>
         </section>
       </main>
 
